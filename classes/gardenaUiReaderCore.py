@@ -1,7 +1,9 @@
 import time
 import webbrowser
+import os
 from pyvirtualdisplay import Display
 from selenium import webdriver
+
 
 class GardenaUiReaderCore:  
     def __init__(self, url, username, password):  
@@ -9,10 +11,16 @@ class GardenaUiReaderCore:
         self.password = password
         self.username = username
         options = webdriver.ChromeOptions()
+        #Headless mode runs chrome in background
         options.add_argument('headless')
         #Window size must be set for id recognition in headless mode
         options.add_argument('window-size=1920x1080') 
         self.browser = webdriver.Chrome(options=options)
+
+    def dispose(self):
+        self.browser.close()
+        self.browser.quit()
+        os.system('wmic process where name="chromedriver" delete')
       
     def login(self):
         self.browser.get(self.url)

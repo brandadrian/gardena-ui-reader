@@ -41,8 +41,8 @@ def getVersion(gardenaUiReader):
     exedcuteAction(1, 'Navigate to About', gardenaUiReader.navigateToAbout)
     exedcuteAction(2, 'Navigate to Versions', gardenaUiReader.navigateToVersions)
     version = exedcuteAction(3, 'Read version', gardenaUiReader.getVersion)
-    return version
     #writeFile(version, False)
+    return version
 
 #                                           #
 #******************Methods******************#
@@ -52,28 +52,40 @@ def getVersion(gardenaUiReader):
 #                                           #
 if __name__ == '__main__':
     #Setup
-    config = configparser.RawConfigParser()
-    config.read_file(open(r'config.txt'))
-    username = config.get('GardenaLogin', 'username')
-    password = config.get('GardenaLogin', 'password')    
-    dbUsername = config.get('Database', 'username')
-    database = config.get('Database', 'connection')
-   
-    print('``````````````````````````````````````````')
-    print('```````````````Gardena UI Reader``````````')
-    print('``````````````````````````````````````````\n')
-    print('Step 1: Initialize application...')
-    print('Connecting to https://smart.gardena.com as ' + username + '...')
-    print('Connecting to Database ' + dbUsername + ' / ' + dbUsername + '...\n')
-    
-    gardenaUiReaderCore = GardenaUiReaderCore('https://smart.gardena.com/#/session/new?username=', username, password)
+    try:
+        config = configparser.RawConfigParser()
+        config.read_file(open(r'config.txt'))
+        url = config.get('GardenaLogin', 'url')
+        username = config.get('GardenaLogin', 'username')
+        password = config.get('GardenaLogin', 'password')    
+        dbUsername = config.get('Database', 'username')
+        database = config.get('Database', 'connection')
 
-    #Get Version
-    version = getVersion(gardenaUiReaderCore)
-    print('Results\n')
-    print('Version')
-    print(version)
+        print('``````````````````````````````````````````')
+        print('```````````````Gardena UI Reader``````````')
+        print('``````````````````````````````````````````\n')
+        print('Step 1: Initialize application...')
+        print('Connecting to https://smart.gardena.com as ' + username + '...')
+        print('Connecting to Database ' + dbUsername + ' / ' + dbUsername + '...\n')
     
+        gardenaUiReaderCore = GardenaUiReaderCore(url, username, password)
+
+        #Get Version
+        version = getVersion(gardenaUiReaderCore)
+
+        print('Step 4: Output Results')
+        print('\n')
+        print('----------------------------')
+        print('Result 1 | Version; ' + version.split(':')[1].replace('\n',''))
+        print('----------------------------')
+        print('Result 2 | Temperatur; 42')
+        print('----------------------------')
+        print('Result 3 | Feuchtigkeit; 42')
+
+    except Exception as e:
+        print(e)
+    finally:
+        gardenaUiReaderCore.dispose()    
 #                                           #
 #******************Main*********************#
 
