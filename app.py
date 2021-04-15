@@ -22,7 +22,7 @@ def exedcuteAction(id, actionText, function):
 
     return result
 
-def writeFile(text, doOpenAfterWrite):
+def writeFile(text):
     print('Step 3: Generate result')
     folder = 'results'
     if not os.path.exists(folder):
@@ -33,16 +33,20 @@ def writeFile(text, doOpenAfterWrite):
     file.write(text)
     file.close()
 
-    if (doOpenAfterWrite):
-        webbrowser.open(fileName)
-
 def getVersion(gardenaUiReader):
     exedcuteAction(0, 'Login', gardenaUiReader.login)
     exedcuteAction(1, 'Navigate to About', gardenaUiReader.navigateToAbout)
     exedcuteAction(2, 'Navigate to Versions', gardenaUiReader.navigateToVersions)
     version = exedcuteAction(3, 'Read version', gardenaUiReader.getVersion)
-    #writeFile(version, False)
+    writeFile(version)
     return version
+
+def writeLog(text):
+    log = time.strftime("%Y%m%d-%H%M%S") + '; '+ text + '\n'
+    fileName = 'log.txt'
+    file = open(fileName, "a")
+    file.write(log)
+    file.close()
 
 #                                           #
 #******************Methods******************#
@@ -60,14 +64,14 @@ if __name__ == '__main__':
         password = config.get('GardenaLogin', 'password')    
         dbUsername = config.get('Database', 'username')
         database = config.get('Database', 'connection')
-
+        
         print('``````````````````````````````````````````')
         print('```````````````Gardena UI Reader``````````')
         print('``````````````````````````````````````````\n')
         print('Step 1: Initialize application...')
         print('Connecting to https://smart.gardena.com as ' + username + '...')
         print('Connecting to Database ' + dbUsername + ' / ' + dbUsername + '...\n')
-    
+        writeLog('Info; App started')
         gardenaUiReaderCore = GardenaUiReaderCore(url, username, password)
 
         #Get Version
@@ -81,11 +85,13 @@ if __name__ == '__main__':
         print('Result 2 | Temperatur; 42')
         print('----------------------------')
         print('Result 3 | Feuchtigkeit; 42')
-
+        
     except Exception as e:
         print(e)
+        writeLog('Error; ' + e)
     finally:
-        gardenaUiReaderCore.dispose()    
+        gardenaUiReaderCore.dispose()
+        writeLog('Info; App closed')
 #                                           #
 #******************Main*********************#
 
