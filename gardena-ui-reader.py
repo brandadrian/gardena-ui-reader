@@ -14,7 +14,3 @@ items = browser.find_elements_by_tag_name("a")
 for item in items:
     print("a")
     print(item.text)
-
-
-
-
