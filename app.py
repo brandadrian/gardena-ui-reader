@@ -1,7 +1,6 @@
 # Author: Adrian Brand
 # Date: 15.04.2021
-# Description: App reads information of https://smart.gardena.com by using a selenium driver and stores data
-# into a databse.
+# Description: App reads information of https://smart.gardena.com by using a selenium driver
 
 
 #!/usr/bin/env python
@@ -37,12 +36,13 @@ def writeFile(text, doOpenAfterWrite):
     if (doOpenAfterWrite):
         webbrowser.open(fileName)
 
-def executeActions(gardenaUiReader):
+def getVersion(gardenaUiReader):
     exedcuteAction(0, 'Login', gardenaUiReader.login)
     exedcuteAction(1, 'Navigate to About', gardenaUiReader.navigateToAbout)
     exedcuteAction(2, 'Navigate to Versions', gardenaUiReader.navigateToVersions)
     version = exedcuteAction(3, 'Read version', gardenaUiReader.getVersion)
-    writeFile(version, False)
+    return version
+    #writeFile(version, False)
 
 #                                           #
 #******************Methods******************#
@@ -65,10 +65,14 @@ if __name__ == '__main__':
     print('Step 1: Initialize application...')
     print('Connecting to https://smart.gardena.com as ' + username + '...')
     print('Connecting to Database ' + dbUsername + ' / ' + dbUsername + '...\n')
+    
     gardenaUiReaderCore = GardenaUiReaderCore('https://smart.gardena.com/#/session/new?username=', username, password)
 
-    #Start Actions
-    executeActions(gardenaUiReaderCore)
+    #Get Version
+    version = getVersion(gardenaUiReaderCore)
+    print('Results\n')
+    print('Version')
+    print(version)
     
 #                                           #
 #******************Main*********************#
