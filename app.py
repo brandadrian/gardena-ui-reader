@@ -15,14 +15,12 @@ from classes.gardenaUiReaderCore import GardenaUiReaderCore
 #******************Methods******************#
 #                                           #
 def exedcuteAction(id, actionText, function):
-
     print('Step 2.' + str(id) + ': Execute action')
     print(actionText)
     result = ''
     result = function()
     print(actionText + ' done!\n')
 
-    
     return result
 
 def writeFile(text, doOpenAfterWrite):
