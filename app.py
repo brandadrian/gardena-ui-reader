@@ -13,7 +13,7 @@ from classes.gardenaUiReaderCore import GardenaUiReaderCore
 
 #******************Methods******************#
 #                                           #
-def exedcuteAction(id, actionText, function):
+def executeAction(id, actionText, function):
     print('Step 2.' + str(id) + ': Execute action')
     print(actionText)
     result = ''
@@ -34,10 +34,10 @@ def writeFile(text):
     file.close()
 
 def getVersion(gardenaUiReader):
-    exedcuteAction(0, 'Login', gardenaUiReader.login)
-    exedcuteAction(1, 'Navigate to About', gardenaUiReader.navigateToAbout)
-    exedcuteAction(2, 'Navigate to Versions', gardenaUiReader.navigateToVersions)
-    version = exedcuteAction(3, 'Read version', gardenaUiReader.getVersion)
+    executeAction(0, 'Login', gardenaUiReader.login)
+    executeAction(1, 'Navigate to About', gardenaUiReader.navigateToAbout)
+    executeAction(2, 'Navigate to Versions', gardenaUiReader.navigateToVersions)
+    version = executeAction(3, 'Read version', gardenaUiReader.getVersion)
     writeFile(version)
     return version
 
