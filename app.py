@@ -10,7 +10,6 @@ import configparser
 import os
 from classes.gardenaUiReaderCore import GardenaUiReaderCore
 
-
 #******************Methods******************#
 #                                           #
 def executeAction(id, actionText, function):
@@ -58,7 +57,7 @@ if __name__ == '__main__':
     #Setup
     try:
         config = configparser.RawConfigParser()
-        config.read_file(open(r'appConfig.config'))
+        config.read_file(open(r'config.txt'))
         url = config.get('GardenaLogin', 'url')
         username = config.get('GardenaLogin', 'username')
         password = config.get('GardenaLogin', 'password')    
