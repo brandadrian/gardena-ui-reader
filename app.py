@@ -2,7 +2,6 @@
 # Date: 15.04.2021
 # Description: App reads information of https://smart.gardena.com by using a selenium driver
 
-
 #!/usr/bin/env python
 import time
 import webbrowser
