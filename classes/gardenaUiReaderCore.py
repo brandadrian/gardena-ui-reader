@@ -3,7 +3,6 @@ import webbrowser
 import os
 from selenium import webdriver
 
-
 class GardenaUiReaderCore:  
     def __init__(self, url, username, password):  
         self.url = url

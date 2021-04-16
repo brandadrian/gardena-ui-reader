@@ -56,7 +56,7 @@ if __name__ == '__main__':
     #Setup
     try:
         config = configparser.RawConfigParser()
-        config.read_file(open(r'config.txt'))
+        config.read_file(open(r'appConfig.config'))
         url = config.get('GardenaLogin', 'url')
         username = config.get('GardenaLogin', 'username')
         password = config.get('GardenaLogin', 'password')    
